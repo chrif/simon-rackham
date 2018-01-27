@@ -2,6 +2,14 @@
 
 declare(strict_types=1);
 
+namespace Chrif\SimonRackham;
+
+use DOMDocument;
+use DOMElement;
+use DOMNameList;
+use DOMXPath;
+use Exception;
+
 class MusicPageParser {
 
 	public function parse(string $source, string $outputTo) {
@@ -17,7 +25,7 @@ class MusicPageParser {
 
 		$this->writeCsv($albumsByYear, $outputTo);
 
-		return $albumNodes->length  . ' albums OK';
+		return $albumNodes->length  . " albums OK";
 	}
 
 	/**
@@ -106,17 +114,17 @@ class MusicPageParser {
 		/** @var DOMNameList|DOMElement[] $info */
 		$info = $xmlPath->query($expression, $album);
 		if (!$info) {
-			throw new Error("No {$column} $i");
+			throw new Exception("No {$column} $i");
 		}
 		if (count($info) > 1) {
-			throw new Error("Too many {$column}s $i");
+			throw new Exception("Too many {$column}s $i");
 		}
 		if (count($info) === 0) {
-			throw new Error("No {$column} $i");
+			throw new Exception("No {$column} $i");
 		}
 		$info = $info[0]->textContent;
 		if (empty($info)) {
-			throw new Error("There is no {$column} $i");
+			throw new Exception("There is no {$column} $i");
 		}
 		$info = trim($info);
 		$info = preg_replace("#\s{2,}#", "", $info);

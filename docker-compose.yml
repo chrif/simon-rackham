@@ -5,7 +5,8 @@ version: '2'
 services:
     php:
         container_name: simonrackhamphp
-        build: php
+        build: docker
+        command: php bin/console
         volumes:
           - .:/opt/project
         environment:

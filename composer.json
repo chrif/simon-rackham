@@ -1,0 +1,22 @@
+{
+  "name": "chrif/simonrackham",
+  "description": "simonrackham",
+  "license": "proprietary",
+  "autoload": {
+    "psr-4": {
+      "Chrif\\SimonRackham\\": [
+        "src",
+        "tests"
+      ]
+    },
+    "classmap": [
+    ]
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.2"
+  },
+  "require": {
+    "symfony/console": "^3.3",
+    "beberlei/assert": "^2.7"
+  }
+}
