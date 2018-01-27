@@ -25,7 +25,7 @@ class MusicPageParser {
 
 		$this->writeCsv($albumsByYear, $outputTo);
 
-		return $albumNodes->length  . " albums OK";
+		return $albumNodes->length . " albums OK";
 	}
 
 	/**
