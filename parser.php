@@ -2,7 +2,8 @@
 
 $dom = new DOMDocument();
 $dom->preserveWhiteSpace = false;
-$html = file_get_contents('http://www.simonrackhamswork.com/music/');
+//$html = file_get_contents('http://www.simonrackhamswork.com/music/');
+$html = file_get_contents('index.html');
 
 error_reporting(E_ERROR | E_PARSE);
 $dom->loadHTML($html);
@@ -65,4 +66,6 @@ foreach ($out as $year => $all) {
 }
 fclose($file);
 
-var_export($out);
+//var_export($out);
+
+echo $albums->length  . ' albums OK';
