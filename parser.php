@@ -1,7 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
-
 $dom = new DOMDocument();
 $dom->preserveWhiteSpace = false;
 $html = file_get_contents('http://www.simonrackhamswork.com/music/');
