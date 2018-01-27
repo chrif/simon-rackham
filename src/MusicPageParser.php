@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chrif\SimonRackham;
 
+use DOMAttr;
 use DOMDocument;
 use DOMElement;
 use DOMNameList;
@@ -73,6 +74,9 @@ class MusicPageParser {
 		foreach ($albumNodes as $i => $albumNode) {
 			$title = $this->extractInfo($xPath, "h2[@class='album-title']", $albumNode, "title", $i);
 
+			$href = $this->extractInfo($xPath, "h2[@class='album-title']/a/@href", $albumNode, "title", $i);
+			$href = 'http://www.simonrackhamswork.com' . $href;
+
 			$year = $this->extractInfo($xPath, "div[@class='album-release-date responsive_show']", $albumNode, "title", $i);
 			$year = preg_replace("#\D+#", "", $year);
 
@@ -87,6 +91,7 @@ class MusicPageParser {
 				'year' => $year,
 				'index' => str_pad((string)(count($albumsByYear[$year]) + 1), 2, '0', STR_PAD_LEFT),
 				'description' => $description,
+				'href' => $href,
 			];
 		}
 
@@ -111,7 +116,7 @@ class MusicPageParser {
 	}
 
 	private function extractInfo(DOMXPath $xmlPath, $expression, $album, $column, $i) {
-		/** @var DOMNameList|DOMElement[] $info */
+		/** @var DOMNameList|DOMElement[]|DOMAttr[] $info */
 		$info = $xmlPath->query($expression, $album);
 		if (!$info) {
 			throw new Exception("No {$column} $i");
@@ -122,14 +127,15 @@ class MusicPageParser {
 		if (count($info) === 0) {
 			throw new Exception("No {$column} $i");
 		}
-		$info = $info[0]->textContent;
-		if (empty($info)) {
+
+		$out = $info[0]->textContent;
+		if (empty($out)) {
 			throw new Exception("There is no {$column} $i");
 		}
-		$info = trim($info);
-		$info = preg_replace("#\s{2,}#", "", $info);
+		$out = trim($out);
+		$out = preg_replace("#\s{2,}#", "", $out);
 
-		return $info;
+		return $out;
 	}
 
 }
