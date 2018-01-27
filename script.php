@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Parser.php';
+require_once 'MusicPageParser.php';
 
 $parser = new MusicPageParser();
 
