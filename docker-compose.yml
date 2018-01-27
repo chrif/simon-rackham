@@ -6,7 +6,6 @@ services:
     php:
         container_name: simonrackhamphp
         build: docker
-        command: php bin/console
         volumes:
           - .:/opt/project
         environment:
