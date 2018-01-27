@@ -1,0 +1,13 @@
+version: '2'
+
+# https://github.com/maxpou/docker-symfony
+
+services:
+    php:
+        container_name: simonrackhamphp
+        build: php
+        volumes:
+          - .:/opt/project
+        environment:
+          XDEBUG_CONFIG: "remote_host=192.168.1.69"
+          PHP_IDE_CONFIG: "serverName=simonrackham"
