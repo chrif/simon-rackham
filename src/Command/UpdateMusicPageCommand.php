@@ -20,7 +20,7 @@ class UpdateMusicPageCommand extends Command {
 	protected function execute(InputInterface $input, OutputInterface $output) {
 		$html = file_get_contents('http://www.simonrackhamswork.com/music/');
 
-		file_put_contents(__DIR__ . '/../../resource/index.html', $html);
+		file_put_contents(__DIR__ . '/../../resource/music-index.html', $html);
 
 		$output->writeln('Music page updated');
 
