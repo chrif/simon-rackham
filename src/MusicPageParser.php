@@ -73,14 +73,12 @@ class MusicPageParser {
 		$albumsByYear = [];
 
 		foreach ($albumNodes as $i => $albumNode) {
-			$progressBar->advance();
-
 			$title = $this->extractInfo($xPath, "h2[contains(@class, 'album-title')]", $albumNode, "title", $i);
 
-			$href = $this->extractInfo($xPath, "h2[contains(@class, 'album-title')]/a/@href", $albumNode, "title", $i);
+			$href = $this->extractInfo($xPath, "h2[contains(@class, 'album-title')]/a/@href", $albumNode, "href", $i);
 			$href = 'http://www.simonrackhamswork.com' . $href;
 
-			$year = $this->extractInfo($xPath, "div[contains(@class, 'album-release-date')]", $albumNode, "title", $i);
+			$year = $this->extractInfo($xPath, "div[contains(@class, 'album-release-date')]", $albumNode, "year", $i);
 			$year = preg_replace("#\D+#", "", $year);
 
 			$description = $this->extractInfo($xPath, "div[contains(@class, 'album-description')]", $albumNode, "description", $i);
@@ -96,6 +94,8 @@ class MusicPageParser {
 				'description' => $description,
 				'href' => $href,
 			];
+
+			$progressBar->advance();
 		}
 
 		return $albumsByYear;
