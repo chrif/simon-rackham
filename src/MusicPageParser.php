@@ -58,7 +58,7 @@ class MusicPageParser {
 	 */
 	private function getAlbumNodes(DOMXPath $xPath) {
 		/** @var DOMNameList|DOMElement[] $albumNodes */
-		$albumNodes = $xPath->query("//div[@class='album-meta-text']");
+		$albumNodes = $xPath->query("//div[contains(@class, 'album-meta-text')]");
 
 		return $albumNodes;
 	}
@@ -72,15 +72,15 @@ class MusicPageParser {
 		$albumsByYear = [];
 
 		foreach ($albumNodes as $i => $albumNode) {
-			$title = $this->extractInfo($xPath, "h2[@class='album-title']", $albumNode, "title", $i);
+			$title = $this->extractInfo($xPath, "h2[contains(@class, 'album-title')]", $albumNode, "title", $i);
 
-			$href = $this->extractInfo($xPath, "h2[@class='album-title']/a/@href", $albumNode, "title", $i);
+			$href = $this->extractInfo($xPath, "h2[contains(@class, 'album-title')]/a/@href", $albumNode, "title", $i);
 			$href = 'http://www.simonrackhamswork.com' . $href;
 
-			$year = $this->extractInfo($xPath, "div[@class='album-release-date responsive_show']", $albumNode, "title", $i);
+			$year = $this->extractInfo($xPath, "div[contains(@class, 'album-release-date')]", $albumNode, "title", $i);
 			$year = preg_replace("#\D+#", "", $year);
 
-			$description = $this->extractInfo($xPath, "div[@class='album-description']", $albumNode, "description", $i);
+			$description = $this->extractInfo($xPath, "div[contains(@class, 'album-description')]", $albumNode, "description", $i);
 
 			if (!isset($albumsByYear[$year])) {
 				$albumsByYear[$year] = [];
