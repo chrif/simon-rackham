@@ -21,16 +21,23 @@ class UpdateMusicPageCommand extends Command {
 	protected function execute(InputInterface $input, OutputInterface $output) {
 		$output->writeln('Updating music page');
 
-		/** @var ProgressBar $progress */
-		$progress = new ProgressBar($output, 100);
-		$progress->setFormat('verbose');
-		$progress->start();
+		/** @var ProgressBar $progressBar */
+		$progressBar = new ProgressBar($output, 150);
+		$progressBar->setFormat('[%bar%] %percent:3s%% %elapsed:6s%');
+		$progressBar->start();
 
-		$context = stream_context_create([], ['notification' => $this->notifier($progress)]);
+		$context = stream_context_create([], ['notification' => $this->notifier($progressBar)]);
 
 		$html = file_get_contents('http://www.simonrackhamswork.com/music/', false, $context);
 
-		$progress->finish();
+		if (false === $html) {
+			$output->writeln('');
+			$output->writeln('<error>Unable to fetch page</error>');
+
+			return 1;
+		}
+
+		$progressBar->finish();
 
 		file_put_contents(__DIR__ . '/../../resource/music-index.html', $html);
 
@@ -41,21 +48,9 @@ class UpdateMusicPageCommand extends Command {
 	}
 
 	private function notifier(ProgressBar $progressBar) {
-		return (function (
-			$notification_code,
-			$severity,
-			$message,
-			$message_code,
-			$bytes_transferred,
-			$bytes_max
-		) use ($progressBar) {
-			switch ($notification_code) {
-				case STREAM_NOTIFY_FILE_SIZE_IS:
-					$progressBar->start($bytes_max);
-					break;
-				case STREAM_NOTIFY_PROGRESS:
-					$progressBar->setProgress($bytes_transferred);
-					break;
+		return (function ($notification_code) use ($progressBar) {
+			if (STREAM_NOTIFY_PROGRESS === $notification_code) {
+				$progressBar->advance();
 			}
 		})->bindTo($this);
 	}
