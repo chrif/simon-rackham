@@ -10,10 +10,11 @@ use DOMElement;
 use DOMNameList;
 use DOMXPath;
 use Exception;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 class MusicPageParser {
 
-	public function parse(string $source, string $outputTo) {
+	public function parse(string $source, string $outputTo, ProgressBar $progressBar) {
 		$html = $this->getHtml($source);
 
 		$document = $this->getDocument($html);
@@ -21,12 +22,11 @@ class MusicPageParser {
 		$xPath = new DOMXPath($document);
 
 		$albumNodes = $this->getAlbumNodes($xPath);
+		$progressBar->start(count($albumNodes));
 
-		$albumsByYear = $this->parseAlbumsByYear($albumNodes, $xPath);
+		$albumsByYear = $this->parseAlbumsByYear($albumNodes, $xPath, $progressBar);
 
 		$this->writeCsv($albumsByYear, $outputTo);
-
-		return $albumNodes->length . " albums OK";
 	}
 
 	/**
@@ -66,12 +66,15 @@ class MusicPageParser {
 	/**
 	 * @param $albumNodes
 	 * @param $xPath
+	 * @param ProgressBar $progressBar
 	 * @return array
 	 */
-	private function parseAlbumsByYear($albumNodes, $xPath) {
+	private function parseAlbumsByYear($albumNodes, $xPath, ProgressBar $progressBar) {
 		$albumsByYear = [];
 
 		foreach ($albumNodes as $i => $albumNode) {
+			$progressBar->advance();
+
 			$title = $this->extractInfo($xPath, "h2[contains(@class, 'album-title')]", $albumNode, "title", $i);
 
 			$href = $this->extractInfo($xPath, "h2[contains(@class, 'album-title')]/a/@href", $albumNode, "title", $i);

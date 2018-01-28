@@ -42,7 +42,7 @@ class UpdateMusicPageCommand extends Command {
 		file_put_contents(__DIR__ . '/../../resource/music-index.html', $html);
 
 		$output->writeln('');
-		$output->writeln('Music page updated');
+		$output->writeln('<info>OK</info>');
 
 		return 0;
 	}

@@ -24,15 +24,19 @@ class ExtractMusicInfoCommand extends Command {
 
 		$output->writeln('Result will be written to parsed.csv');
 
-		$progress = new ProgressBar($output, 1);
-		$progress->setFormat('verbose');
-		$progress->start();
+		$progressBar = new ProgressBar($output, 1);
+		$progressBar->setFormat(' %current%/%max% albums [%bar%] %percent:3s%% %elapsed:6s%');
+		$progressBar->start();
 
-		$result = $parser->parse(__DIR__ . '/../../resource/music-index.html', __DIR__ . '/../../parsed.csv');
+		$parser->parse(
+			__DIR__ . '/../../resource/music-index.html',
+			__DIR__ . '/../../parsed.csv',
+			$progressBar
+		);
 
-		$progress->finish();
+		$progressBar->finish();
 		$output->writeln('');
-		$output->writeln($result);
+		$output->writeln('<info>OK</info>');
 
 		return 0;
 	}
