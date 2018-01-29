@@ -1,10 +1,7 @@
-version: '2'
-
-# https://github.com/maxpou/docker-symfony
+version: '3'
 
 services:
     php:
-        container_name: simonrackhamphp
         build: docker
         volumes:
           - .:/opt/project
