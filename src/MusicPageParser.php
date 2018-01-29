@@ -43,7 +43,6 @@ class MusicPageParser {
 	 */
 	private function getDocument($html) {
 		$document = new DOMDocument();
-		$document->preserveWhiteSpace = false;
 
 		error_reporting(E_ERROR | E_PARSE);
 		$document->loadHTML($html);
@@ -136,7 +135,7 @@ class MusicPageParser {
 			throw new Exception("There is no {$column} $i");
 		}
 		$out = trim($out);
-		$out = preg_replace("#\s{2,}#", "", $out);
+		$out = preg_replace("#[\pZ\pC]+#u", " ", $out);
 
 		return $out;
 	}
