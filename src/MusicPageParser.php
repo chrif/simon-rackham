@@ -131,10 +131,15 @@ class MusicPageParser {
 		}
 
 		$out = $info[0]->textContent;
+
 		if (empty($out)) {
 			throw new Exception("There is no {$column} $i");
 		}
+
 		$out = trim($out);
+
+		// pattern to match all whitespaces
+		// @see https://gist.github.com/chrif/8dffdb1dab7cba848c3f3fb62a17485e
 		$out = preg_replace("#[\pZ\pC]+#u", " ", $out);
 
 		return $out;
