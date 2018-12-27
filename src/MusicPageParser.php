@@ -77,7 +77,7 @@ class MusicPageParser {
 			$href = $this->extractInfo($xPath, "h2[contains(@class, 'album-title')]/a/@href", $albumNode, "href", $i);
 			$href = 'http://www.simonrackhamswork.com' . $href;
 
-			$year = $this->extractInfo($xPath, "div[contains(@class, 'album-release-date')]", $albumNode, "year", $i);
+			$year = $this->extractInfo($xPath, "div[contains(@class, 'album-release-date responsive_show')]", $albumNode, "year", $i);
 			$year = preg_replace("#\D+#", "", $year);
 
 			$description = $this->extractInfo($xPath, "div[contains(@class, 'album-description')]", $albumNode, "description", $i);

@@ -17,6 +17,7 @@
   },
   "require": {
     "symfony/console": "^3.3",
-    "beberlei/assert": "^2.7"
+    "beberlei/assert": "^2.7",
+    "ext-dom": "*"
   }
 }

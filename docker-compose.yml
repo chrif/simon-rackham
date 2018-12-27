@@ -6,5 +6,5 @@ services:
         volumes:
           - .:/opt/project
         environment:
-          XDEBUG_CONFIG: "remote_host=192.168.1.69"
+          XDEBUG_CONFIG: "remote_host=host.docker.internal"
           PHP_IDE_CONFIG: "serverName=simonrackham"

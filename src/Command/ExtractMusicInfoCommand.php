@@ -30,7 +30,7 @@ class ExtractMusicInfoCommand extends Command {
 
 		$parser->parse(
 			__DIR__ . '/../../resource/music-index.html',
-			__DIR__ . '/../../parsed.csv',
+			__DIR__ . '/../../resource/parsed.csv',
 			$progressBar
 		);
 
